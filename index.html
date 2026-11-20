@@ -108,6 +108,18 @@ nav .nav-cta {
 [data-type-label] { position:relative; min-width:0; }
 [data-typing] > .type-value { opacity:0; }
 .type-overlay { position:absolute; inset:0; pointer-events:none; }
+.type-overlay::after {
+  content:"";
+  display:inline-block;
+  width:1px;
+  height:.9em;
+  margin-inline-end:-1px;
+  transform:translateX(2px);
+  vertical-align:-.1em;
+  background:currentColor;
+  animation:type-caret .64s step-end infinite;
+}
+@keyframes type-caret { 50% { opacity:0; } }
 @media (prefers-reduced-motion:reduce) {
   [data-typing] > .type-value { opacity:1; }
   .type-overlay { display:none; }
@@ -210,8 +222,11 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
       function type() {
         const count = Math.floor((performance.now() - start) / duration * chars.length);
         if (count >= chars.length) {
-          delete target.dataset.typing;
-          ink.remove();
+          ink.textContent = chars.join("");
+          setTimeout(() => {
+            delete target.dataset.typing;
+            ink.remove();
+          }, 720);
           return;
         }
         ink.textContent = chars.slice(0, count + 1).join("");

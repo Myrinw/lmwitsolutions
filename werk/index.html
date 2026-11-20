@@ -108,7 +108,7 @@ nav .nav-cta {
 [data-type-label] { position:relative; min-width:0; }
 [data-typing] > .type-value { opacity:0; }
 .type-overlay { position:absolute; inset:0; pointer-events:none; }
-.type-overlay::after {
+.type-overlay::after, [data-typed] > .type-value::after {
   content:"";
   display:inline-block;
   width:1px;
@@ -122,7 +122,7 @@ nav .nav-cta {
 @keyframes type-caret { 50% { opacity:0; } }
 @media (prefers-reduced-motion:reduce) {
   [data-typing] > .type-value { opacity:1; }
-  .type-overlay { display:none; }
+  .type-overlay, [data-typed] > .type-value::after { display:none; }
 }
 
 .about-grid.with-work-photo { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); }

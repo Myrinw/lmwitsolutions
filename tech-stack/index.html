@@ -226,7 +226,8 @@ footer { padding-bottom: 4rem; }
 
 /* Stack terminal */
 @keyframes stack-blink { 0%, 100% { opacity:1; } 50% { opacity:.3; } }
-.stack-dot { animation:stack-blink 2.4s ease-in-out infinite; }
+.stack-dot { animation:stack-blink 2.4s ease-in-out infinite paused; }
+.stack-window[data-visible] .stack-dot { animation-play-state:running; }
 .stack-button { margin-top:1.8rem; gap:.6rem; background:var(--accent); color:var(--deep); }
 .stack-button:hover { background:var(--paper); }
 .github-icon { flex:none; }
@@ -325,5 +326,10 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
     }
   }, { threshold: .5 });
   for (const label of document.querySelectorAll("[data-type-label]")) observer.observe(label);
+  // The terminal dot only blinks while the terminal is on screen.
+  const terminals = new IntersectionObserver((entries) => {
+    for (const { target, isIntersecting } of entries) target.toggleAttribute("data-visible", isIntersecting);
+  });
+  for (const terminal of document.querySelectorAll(".stack-window")) terminals.observe(terminal);
 }
 </script></body></html>

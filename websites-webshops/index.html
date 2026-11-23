@@ -226,7 +226,8 @@ footer { padding-bottom: 4rem; }
 
 /* Stack terminal */
 @keyframes stack-blink { 0%, 100% { opacity:1; } 50% { opacity:.3; } }
-.stack-dot { animation:stack-blink 2.4s ease-in-out infinite; }
+.stack-dot { animation:stack-blink 2.4s ease-in-out infinite paused; }
+.stack-window[data-visible] .stack-dot { animation-play-state:running; }
 .stack-button { margin-top:1.8rem; gap:.6rem; background:var(--accent); color:var(--deep); }
 .stack-button:hover { background:var(--paper); }
 .github-icon { flex:none; }
